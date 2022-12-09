@@ -1,44 +1,36 @@
 input.onButtonPressed(Button.A, function () {
-    basic.showLeds(`
-        . . . . .
-        # # . . .
-        # # . . .
-        # # . . .
-        . . . . .
-        `)
-    radio.sendString("137")
+    g += -1
+})
+input.onGesture(Gesture.Shake, function () {
+    basic.showIcon(IconNames.Yes)
+    radio.sendString("" + convertToText(g) + "577")
     radio.sendString("P")
 })
 input.onButtonPressed(Button.AB, function () {
-    basic.showLeds(`
-        . . . . .
-        # # . # #
-        # # . # #
-        # # . # #
-        . . . . .
-        `)
-    radio.sendString("1112345671234567")
-    radio.sendString("221234567")
+    basic.showIcon(IconNames.Heart)
+    radio.sendString("" + convertToText(g) + "21234567")
     radio.sendString("P")
 })
 input.onButtonPressed(Button.B, function () {
-    basic.showLeds(`
-        . . . . .
-        . . . # #
-        . . . # #
-        . . . # #
-        . . . . .
-        `)
-    radio.sendString("237")
-    radio.sendString("P")
+    g += 1
 })
+let g = 0
+basic.showLeds(`
+    . . # . .
+    . # # # .
+    # . # . #
+    . . # . .
+    . . # . .
+    `)
+basic.pause(1000)
 radio.setGroup(200)
+g = 0
 basic.forever(function () {
-    basic.showLeds(`
-        . . # . .
-        . # # # .
-        # . # . #
-        . . # . .
-        . . # . .
-        `)
+    if (g < 0) {
+        g = 0
+    }
+    if (9 < g) {
+        g = 9
+    }
+    basic.showNumber(g)
 })
